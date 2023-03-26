@@ -26,7 +26,7 @@
 	let dx = -1; // x ball direction
 	let dy = -2; // y ball direction
 	const ballRadius = 10; //ball size
-	var ballColor = "#34ebb4"; // variable for the starting color of the ball&paddle
+	var ballColor = "#34ebb4"; // variable and the starting color of the ball & paddle
 	const paddleHeight = 10;
 	const paddleWidth = 75;
 	let paddleX = (canvas.width - paddleWidth) / 2;
@@ -39,7 +39,8 @@
 	function keyDownHandler(e) {
 	    if (e.key === "Right" || e.key === "ArrowRight") {
 		    rightPressed = true;
-	    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+	    } 
+		else if (e.key === "Left" || e.key === "ArrowLeft") {
 		    leftPressed = true;
 	    }
 	}
@@ -47,7 +48,8 @@
 	function keyUpHandler(e) {
 	    if (e.key === "Right" || e.key === "ArrowRight") {
 			rightPressed = false;
-	    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+	    } 
+		else if (e.key === "Left" || e.key === "ArrowLeft") {
 			leftPressed = false;
 	    }
 	}
@@ -71,21 +73,36 @@
 	function draw() { //ball movement
 	    ctx.clearRect(0, 0, canvas.width, canvas.height);
 	    drawBall();
+		drawPaddle();
 	    
 	    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) { //bouncing off left and right walls
 		  dx = -dx;
 		  ballColor = getRandomColor();
 	    }
-	    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) { //bouncing off top and bottom walls
+		
+	    if (y + dy < ballRadius) { //bouncing off top wall
 	      dy = -dy;
 		  ballColor = getRandomColor();
 	    }
+		} 
+		else if (y + dy > canvas.height - ballRadius) {
+		  if (x > paddleX && x < paddleX + paddleWidth) {
+			dy = -dy;
+			ballColor = getRandomColor();
+		  } 
+		  else {
+			alert("GAME OVER");
+			document.location.reload();
+			clearInterval(interval);
+		  }
+		}
 		
-		if (rightPressed) {
-	        paddleX = Math.min(paddleX + 7, canvas.width - paddleWidth);
-	    } else if (leftPressed) {
-	        paddleX = Math.max(paddleX - 7, 0);
-	    }
+		if(rightPressed && paddleX < canvas.width-paddleWidth) { //prevents the paddle from going past the right wall
+			paddleX += 7; //paddle movement speed to the right
+		}
+		else if(leftPressed && paddleX > 0) { //prevents paddle from going past the left wall
+			paddleX -= 7; // paddle movement speed to the left
+		}
 		
 		x += dx; //updates the x position of the ball every frame
 	    y += dy; //updates the y position of the ball every frame
@@ -100,7 +117,7 @@
 		return ballColor;
 	}
 	
-	setInterval(draw, 10);
+	const interval = setInterval(draw, 10);
       
     </script>
   </body>
