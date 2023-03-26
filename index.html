@@ -87,6 +87,7 @@
 			  dy = -dy;
 			  b.status = 0;
 			  score++;
+			  ballColor = getRandomColor();
 			  if(score == brickRowCount*brickColumnCount) {
 				alert("YOU WIN, CONGRATS!");
 				document.location.reload();
