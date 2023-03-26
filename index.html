@@ -137,6 +137,15 @@
 		x += dx;
 		y += dy;
 	}
+	
+		function getRandomColor() { //changes the ball's color every time it hits a wall
+		var letters = "0123456789ABCDEF";
+		var ballColor = "#";
+		for (var i = 0; i < 6; i++) {
+			ballColor += letters[Math.floor(Math.random() * 16)];
+		}
+		return ballColor;
+	}
 
 	var interval = setInterval(draw, 10);
 
