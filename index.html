@@ -23,14 +23,15 @@
 	const ctx = canvas.getContext("2d");
 	let x = canvas.width / 2;
 	let y = canvas.height - 30;  
-	let dx = -1;
-	let dy = -2;
-	const ballRadius = 5;
+	let dx = -1; // x ball direction
+	let dy = -2; // y ball direction
+	const ballRadius = 10; //ball size
+	var color = "#34ebb4";
 	
   	function drawBall() { //ball properties
 	    ctx.beginPath();
 	    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-	    ctx.fillStyle = "#34ebb4";
+	    ctx.fillStyle = color;
 	    ctx.fill();
 	    ctx.closePath();
 	}
@@ -38,17 +39,27 @@
 	function draw() { //ball movement
 	    ctx.clearRect(0, 0, canvas.width, canvas.height);
 	    drawBall();
-	    x += dx;
-	    y += dy;
+	    x += dx; //updates the x position of the ball every frame
+	    y += dy; //updates the y position of the ball every frame
 	  
 	    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) { //bouncing off left and right walls
 		  dx = -dx;
+		  color = getRandomColor();
 	    }
 	    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) { //bouncing off top and bottom walls
 	      dy = -dy;
+		  color = getRandomColor();
 	    }
 	}
 	
+	function getRandomColor() { //changes the ball's color every time it hits a wall
+		var letters = "0123456789ABCDEF";
+		var color = "#";
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
 	setInterval(draw, 10);
       
     </script>
