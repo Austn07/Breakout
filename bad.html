@@ -16,7 +16,7 @@
       }
     </style>
   </head>
-  <body>
+  <body bgcolor="black">
     <canvas id="myCanvas" width="480" height="320"></canvas>
 
 <script>
@@ -42,7 +42,9 @@
 	var ballColor = "#34ebb4"; // variable and the starting color of the ball & paddle
 	var score = 0;
 	var lives = 3;
-	
+	var MAX_BOUNCE_ANGLE = 60 
+	var MAX_DX = 10
+	var MAX_DY = 10
 
 
 	var bricks = [];
@@ -87,7 +89,9 @@
 		for(var r=0; r<brickRowCount; r++) {
 		  var b = bricks[c][r];
 		  if(b.status == 1) {
-			if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+			var brickX = c*(brickWidth+brickPadding)+brickOffsetLeft;
+			var brickY = r*(brickHeight+brickPadding)+brickOffsetTop;
+			if(x > brickX && x < brickX+brickWidth && y > brickY && y < brickY+brickHeight) {
 			  dy = -dy;
 			  b.status = 0;
 			  score++;
@@ -99,6 +103,15 @@
 			}
 		  }
 		}
+	  }
+	  if(x + ballRadius >= paddleX && x - ballRadius <= paddleX + paddleWidth && y + ballRadius >= canvas.height - paddleHeight) {
+		var paddleCenter = paddleX + paddleWidth/2;
+		var distanceFromCenter = x - paddleCenter;
+		var normalizedDistance = distanceFromCenter/(paddleWidth/2);
+		var bounceAngle = normalizedDistance * MAX_BOUNCE_ANGLE;
+		dx = MAX_DX * Math.sin(bounceAngle);
+		dy = -MAX_DY * Math.cos(bounceAngle);
+		ballColor = getRandomColor();
 	  }
 	}
 
