@@ -50,7 +50,11 @@
 	var MAX_DX = 3 //left and right speed of the ball 
 	var MAX_DY = 3 //up and down speed of the ball
 	var ballStickToPaddle = true; // set the default of ballStickToPaddle to true
-
+	var blockWidth = 100;
+	var blockHeight = 20;
+	var blockX = canvas.width/2 - blockWidth/2;
+	var blockY = 200;
+		
 	var bricks = [];
 	for (var c = 0; c < brickColumnCount; c++) {
 		bricks[c] = [];
@@ -112,6 +116,15 @@
 			  }
 			}
 		  }
+		}
+	  }
+	  if (x + ballRadius > blockX && x - ballRadius < blockX + blockWidth &&
+		y + ballRadius > blockY && y - ballRadius < blockY + blockHeight) {
+		// change direction of ball based on which side of block it hits
+		if (y < blockY + blockHeight/2) {
+		  dy = -dy;
+		} else {
+		  dx = -dx;
 		}
 	  }
 	  if (x + ballRadius >= paddleX && x - ballRadius <= paddleX + paddleWidth && y + ballRadius >= canvas.height - paddleHeight) {
@@ -180,6 +193,11 @@
 	  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 	}
 
+	function drawBlock() {
+	  ctx.fillStyle = "#34ebb4";
+	  ctx.fillRect(blockX, blockY, blockWidth, blockHeight);
+	}
+	
 	function draw() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawBricks();
@@ -188,6 +206,7 @@
 		collisionDetection();
 		drawScore();
 		drawLives();
+		drawBlock(); // call drawBlock() here
 		
 		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
 			dx = -dx;
