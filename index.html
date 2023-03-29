@@ -47,9 +47,9 @@
 	var score = 0;
 	var lives = 3;
 	var MAX_BOUNCE_ANGLE = 60 
-	var MAX_DX = 3
-	var MAX_DY = 3
-	var ballStickToPaddle = true; // set the flag to true
+	var MAX_DX = 3 //left and right speed of the ball 
+	var MAX_DY = 3 //up and down speed of the ball
+	var ballStickToPaddle = true; // set the default of ballStickToPaddle to true
 
 	var bricks = [];
 	for (var c = 0; c < brickColumnCount; c++) {
@@ -70,10 +70,11 @@
 		else if(e.key == "Left" || e.key == "ArrowLeft") {
 			leftPressed = true;
 		}
-		if (e.key == " " && ballStickToPaddle) { // if spacebar is pressed and the ball is sticking to the paddle
-			ballStickToPaddle = false; // unset the flag
+		if (e.key == " " && ballStickToPaddle) { // only works if spacebar is pressed and the ball is sticking to the paddle
+			ballStickToPaddle = false; // unsticks the ball from the paddle
 			dx = 2;
 			dy = -2;
+			ballColor = "#34ebb4";
 		}
 	}
 
@@ -128,7 +129,7 @@
 	function drawBall() {
 		if (ballStickToPaddle) { // if the ball should stick to the paddle
 			x = paddleX + paddleWidth/2; // set the ball position to the middle-right of the paddle
-			y = canvas.height - paddleHeight - ballRadius;
+			y = canvas.height - paddleHeight - ballRadius - 0.5;
 		} else { // if the ball is in motion
 			x += dx;
 			y += dy;
