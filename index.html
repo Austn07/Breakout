@@ -126,16 +126,20 @@
 		  }
 		}
 	  }
+	  // Check for collision with block
 	  if (x + ballRadius > blockX && x - ballRadius < blockX + blockWidth &&
-		y + ballRadius > blockY && y - ballRadius < blockY + blockHeight) {
-		// change direction of ball based on which side of block it hits
-		if (y < blockY + blockHeight/2) {
-		  dy = -dy;
-		} 
-		else {
+		  y + ballRadius > blockY && y - ballRadius < blockY + blockHeight) {
+		// Check if the ball is coming from the left or right of the block
+		if ((x + ballRadius > blockX && dx < 0) || (x - ballRadius < blockX + blockWidth && dx > 0)) {
 		  dx = dx;
 		}
+		// Check if the ball is coming from the top or bottom of the block
+		if ((y + ballRadius > blockY && dy < 0) || (y - ballRadius < blockY + blockHeight && dy > 0)) {
+		  dy = -dy;
+		}
+		ballColor = getRandomColor();
 	  }
+	  
 	  if (x + ballRadius >= paddleX && x - ballRadius <= paddleX + paddleWidth && y + ballRadius >= canvas.height - paddleHeight) {
 		var paddleCenter = paddleX + paddleWidth / 2;
 		var distanceFromCenter = x - paddleCenter;
