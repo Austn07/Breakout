@@ -105,8 +105,16 @@
 		  if (b.status == 1) {
 			var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
 			var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-			if (x > brickX && x < brickX + brickWidth && y > brickY && y < brickY + brickHeight) {
-			  dy = -dy;
+			// Check if the ball is within the boundaries of the brick
+			if (x + ballRadius > brickX && x - ballRadius < brickX + brickWidth && y + ballRadius > brickY && y - ballRadius < brickY + brickHeight) {
+			  // Check if the ball is coming from the top or bottom of the brick
+			  if ((y + ballRadius > brickY && dy < 0) || (y - ballRadius < brickY + brickHeight && dy > 0)) {
+				dy = -dy;
+			  }
+			  // Check if the ball is coming from the left or right of the brick
+			  if ((x + ballRadius > brickX && dx < 0) || (x - ballRadius < brickX + brickWidth && dx > 0)) {
+				dx = dx;
+			  }
 			  b.status = 0;
 			  score++;
 			  ballColor = getRandomColor();
@@ -123,8 +131,9 @@
 		// change direction of ball based on which side of block it hits
 		if (y < blockY + blockHeight/2) {
 		  dy = -dy;
-		} else {
-		  dx = -dx;
+		} 
+		else {
+		  dx = dx;
 		}
 	  }
 	  if (x + ballRadius >= paddleX && x - ballRadius <= paddleX + paddleWidth && y + ballRadius >= canvas.height - paddleHeight) {
