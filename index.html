@@ -131,8 +131,10 @@
 		  y + ballRadius > blockY && y - ballRadius < blockY + blockHeight) {
 		if (dx > 0 && x < blockX + ballRadius) {
 		  dx = -dx; // Hit block from left, go right
+		  dy = -dy;
 		} else if (dx < 0 && x > blockX + blockWidth - ballRadius) {
 		  dx = -dx; // Hit block from right, go left
+		  dy = -dy;
 		}   
 		dy = -dy; // Hit block from top or bottom, go opposite y direction
 	  }
