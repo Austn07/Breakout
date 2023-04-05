@@ -37,11 +37,11 @@
 	var paddleX = (canvas.width-paddleWidth)/2;
 	var rightPressed = false;
 	var leftPressed = false;
-	var brickRowCount = 5;
-	var brickColumnCount = 7;
-	var brickWidth = 75;
-	var brickHeight = 20;
-	var brickPadding = 20;
+	var brickRowCount = 3; //5
+	var brickColumnCount = 4; //7
+	var brickWidth = 150; //75
+	var brickHeight = 40; //20
+	var brickPadding = 20; //20 - the space between bricks
 	var brickOffsetTop = 30;
 	var brickOffsetLeft = 30;
 	var score = 0;
@@ -112,8 +112,8 @@
 				dy = -dy;
 			  }
 			  // Check if the ball is coming from the left or right of the brick
-			  if ((x + ballRadius > brickX && dx < 0) || (x - ballRadius < brickX + brickWidth && dx > 0)) {
-				dx = dx;
+			  else if ((x + ballRadius > brickX && dx < 0) || (x - ballRadius < brickX + brickWidth && dx > 0)) {
+				dx = -dx; // Change direction of dx
 			  }
 			  b.status = 0;
 			  score++;
@@ -126,6 +126,7 @@
 		  }
 		}
 	  }
+
 	  // Check for collision with block
 	  if (x + ballRadius > blockX && x - ballRadius < blockX + blockWidth &&
 		  y + ballRadius > blockY && y - ballRadius < blockY + blockHeight) {
