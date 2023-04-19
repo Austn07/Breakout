@@ -9,23 +9,23 @@
         margin: 0;
       }
       canvas {
-        background: black;
+        background: #760E17;
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
-		border: 5px solid #34ebb4;
+		border: 5px solid #8CFFFB;
         margin: 0 auto;
       }
     </style>
   </head>
-  <body bgcolor="black">
+  <body bgcolor= black >
     <canvas id="myCanvas" width="705" height="600"></canvas>
 
 <script>
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	var ballRadius = 10;
-	var ballColor = "#34ebb4"; // variable and the starting color of the ball & paddle
+	var ballColor = "#8CFFFB"; // variable and the starting color of the ball & paddle
 	var x = canvas.width/2;
 	var y = canvas.height-30;
 	var dx = 2;
@@ -35,10 +35,10 @@
 	var paddleX = (canvas.width-paddleWidth)/2;
 	var rightPressed = false;
 	var leftPressed = false;
-	var brickRowCount = 3; //5
-	var brickColumnCount = 4; //7
-	var brickWidth = 150; //75
-	var brickHeight = 40; //20
+	var brickRowCount = 5; //5
+	var brickColumnCount = 7; //7
+	var brickWidth = 75; //75
+	var brickHeight = 20; //20
 	var brickPadding = 20; //20 - the space between bricks
 	var brickOffsetTop = 30;
 	var brickOffsetLeft = 30;
@@ -52,6 +52,7 @@
 	var blockHeight = 50;
 	var blockX = canvas.width/2 - blockWidth/2;
 	var blockY = 275;
+	var blockColor = "#8CFFFB";
 		
 	var bricks = [];
 	for (var c = 0; c < brickColumnCount; c++) {
@@ -76,7 +77,7 @@
 			ballStickToPaddle = false; // unsticks the ball from the paddle
 			dx = 2;
 			dy = -2;
-			ballColor = "#34ebb4";
+			ballColor = "#8CFFFB"; //starting ball color?
 		}
 	}
 
@@ -136,6 +137,7 @@
 		  dy = -dy;
 		}   
 		dy = -dy; // Hit block from top or bottom, go opposite y direction
+		ballColor = getRandomColor();
 	  }
 	  
 	  if (x + ballRadius >= paddleX && x - ballRadius <= paddleX + paddleWidth && y + ballRadius >= canvas.height - paddleHeight) {
@@ -160,7 +162,7 @@
 		}
 		ctx.beginPath();
 		ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-		ctx.fillStyle = ballColor;
+		ctx.fillStyle = "#8CFFFB"; //ball color
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -169,7 +171,7 @@
 	function drawPaddle() {
 		ctx.beginPath();
 		ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-		ctx.fillStyle = ballColor;
+		ctx.fillStyle = "#8CFFFB"; //Paddle color
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -194,18 +196,18 @@
 	
 	function drawScore() {
 	  ctx.font = "16px Arial";
-	  ctx.fillStyle = ballColor;
+	  ctx.fillStyle = "#8CFFFB";
 	  ctx.fillText("Score: "+score, 8, 20);
 	}
 	
 	function drawLives() {
 	  ctx.font = "16px Arial";
-	  ctx.fillStyle = ballColor;
+	  ctx.fillStyle = "#8CFFFB";
 	  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 	}
 
 	function drawBlock() {
-	  ctx.fillStyle = "#34ebb4";
+	  ctx.fillStyle = "#8CFFFB"; //block color
 	  ctx.fillRect(blockX, blockY, blockWidth, blockHeight);
 	}
 	
